@@ -8,19 +8,12 @@ import matplotlib.font_manager as fm
 import json
 import warnings
 import os
-import matplotlib.pyplot as plt
-plt.rcParams['font.family'] = 'DejaVu Sans'  # matplotlib 내장 기본 폰트
-plt.rcParams['axes.unicode_minus'] = False
 
 warnings.filterwarnings('ignore')
 
-
-# 상대경로로 폰트 설정
-font_path = "malgun.ttf"  # 프로젝트 내 fonts 폴더에 위치
+# 한글 폰트 설정
+font_path = "C:/Windows/Fonts/malgun.ttf"
 font_prop = fm.FontProperties(fname=font_path)
-
-# 한글, 마이너스 기호 깨짐 방지
-plt.rc('font', family=font_prop.get_name())
 plt.rcParams['axes.unicode_minus'] = False
 
 # KRX 종목명-티커 매핑
@@ -131,7 +124,7 @@ def plot_stock_chart(stock_data, stock_name):
     ma_60 = close.rolling(60).mean()
     ma_120 = close.rolling(120).mean()
 
-    fig, ax = plt.subplots(figsize=(10, 6), constrained_layout=True)
+    fig, ax = plt.subplots()
     ax.plot(close.index, close, label="종가", color="blue", linewidth=2)
     ax.plot(ma_5.index, ma_5, label="5일", color="red")
     ax.plot(ma_20.index, ma_20, label="20일", color="green")
