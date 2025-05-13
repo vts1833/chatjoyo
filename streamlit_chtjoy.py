@@ -14,9 +14,13 @@ plt.rcParams['axes.unicode_minus'] = False
 
 warnings.filterwarnings('ignore')
 
-# 한글 폰트 설정
-font_path = "C:/Windows/Fonts/malgun.ttf"
+
+# 상대경로로 폰트 설정
+font_path = "malgun.ttf"  # 프로젝트 내 fonts 폴더에 위치
 font_prop = fm.FontProperties(fname=font_path)
+
+# 한글, 마이너스 기호 깨짐 방지
+plt.rc('font', family=font_prop.get_name())
 plt.rcParams['axes.unicode_minus'] = False
 
 # KRX 종목명-티커 매핑
