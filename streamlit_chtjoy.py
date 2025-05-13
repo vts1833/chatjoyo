@@ -12,30 +12,26 @@ import os
 warnings.filterwarnings('ignore')
 
 # 한글 폰트 설정
-try:
-    # 서버 환경에서 NanumGothic 폰트 사용
-    font_path = None
-    font_name = "NanumGothic"
-    font_list = fm.findSystemFonts()
+def setup_font():
+    # 프로젝트 폴더에 NanumGothic.ttf 포함
+    font_path = os.path.join(os.path.dirname(__file__), "NanumGothic.ttf")
     
-    # NanumGothic 폰트가 있는지 확인
-    for font in font_list:
-        if font_name.lower() in font.lower():
-            font_path = font
-            break
-    
-    if font_path:
+    if os.path.exists(font_path):
+        # 폰트 등록
+        fm.fontManager.addfont(font_path)
         font_prop = fm.FontProperties(fname=font_path)
-        plt.rcParams['font.family'] = font_name
+        plt.rcParams['font.family'] = font_prop.get_name()
+        plt.rcParams['axes.unicode_minus'] = False
+        return True
     else:
-        # 폰트가 없으면 기본 폰트 사용
+        # 폰트 파일이 없으면 기본 폰트 사용
         plt.rcParams['font.family'] = 'sans-serif'
-        st.warning("NanumGothic 폰트를 찾을 수 없습니다. 기본 폰트를 사용합니다.")
+        plt.rcParams['axes.unicode_minus'] = False
+        st.warning("NanumGothic.ttf 폰트를 찾을 수 없습니다. 기본 폰트를 사용합니다. 한글 렌더링 문제가 발생할 수 있습니다.")
+        return False
 
-    plt.rcParams['axes.unicode_minus'] = False
-except Exception as e:
-    st.error(f"폰트 설정 중 오류 발생: {str(e)}")
-    plt.rcParams['font.family'] = 'sans-serif'
+# 폰트 설정 호출
+setup_font()
 
 # KRX 종목명-티커 매핑
 try:
