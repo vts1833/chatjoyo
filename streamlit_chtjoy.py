@@ -9,12 +9,14 @@ import json
 import warnings
 import os
 
-warnings.filterwarnings('ignore')
-
-# 한글 폰트 설정
-font_path = "C:/Windows/Fonts/malgun.ttf"
+# 리눅스에서 NanumGothic 사용
+font_path = "/usr/share/fonts/truetype/nanum/NanumGothic.ttf"
 font_prop = fm.FontProperties(fname=font_path)
+
+plt.rc('font', family=font_prop.get_name())
 plt.rcParams['axes.unicode_minus'] = False
+
+warnings.filterwarnings('ignore')
 
 # KRX 종목명-티커 매핑
 try:
