@@ -8,14 +8,22 @@ import matplotlib.font_manager as fm
 import json
 import warnings
 import os
+import matplotlib.pyplot as plt
+import matplotlib.font_manager as fm
+
+# 한글 폰트 경로 지정
+font_path = "/usr/share/fonts/truetype/nanum/NanumGothic.ttf"
+font_name = fm.FontProperties(fname=font_path).get_name()
+plt.rcParams["font.family"] = font_name
+
 
 warnings.filterwarnings('ignore')
-
+/*
 # 한글 폰트 설정
 font_path = "C:/Windows/Fonts/malgun.ttf"
 font_prop = fm.FontProperties(fname=font_path)
 plt.rcParams['axes.unicode_minus'] = False
-
+*/
 # KRX 종목명-티커 매핑
 try:
     with open('krx_ticker_map.json', 'r', encoding='utf-8') as f:
