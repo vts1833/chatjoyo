@@ -18,12 +18,7 @@ plt.rcParams["font.family"] = font_name
 
 
 warnings.filterwarnings('ignore')
-/*
-# 한글 폰트 설정
-font_path = "C:/Windows/Fonts/malgun.ttf"
-font_prop = fm.FontProperties(fname=font_path)
-plt.rcParams['axes.unicode_minus'] = False
-*/
+
 # KRX 종목명-티커 매핑
 try:
     with open('krx_ticker_map.json', 'r', encoding='utf-8') as f:
