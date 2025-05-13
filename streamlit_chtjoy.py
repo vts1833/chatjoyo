@@ -127,7 +127,7 @@ def plot_stock_chart(stock_data, stock_name):
     ma_60 = close.rolling(60).mean()
     ma_120 = close.rolling(120).mean()
 
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(10, 6), constrained_layout=True)
     ax.plot(close.index, close, label="종가", color="blue", linewidth=2)
     ax.plot(ma_5.index, ma_5, label="5일", color="red")
     ax.plot(ma_20.index, ma_20, label="20일", color="green")
