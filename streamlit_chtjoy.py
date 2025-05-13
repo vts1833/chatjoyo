@@ -9,14 +9,33 @@ import json
 import warnings
 import os
 
-# 리눅스에서 NanumGothic 사용
-font_path = "/usr/share/fonts/truetype/nanum/NanumGothic.ttf"
-font_prop = fm.FontProperties(fname=font_path)
-
-plt.rc('font', family=font_prop.get_name())
-plt.rcParams['axes.unicode_minus'] = False
-
 warnings.filterwarnings('ignore')
+
+# 한글 폰트 설정
+try:
+    # 서버 환경에서 NanumGothic 폰트 사용
+    font_path = None
+    font_name = "NanumGothic"
+    font_list = fm.findSystemFonts()
+    
+    # NanumGothic 폰트가 있는지 확인
+    for font in font_list:
+        if font_name.lower() in font.lower():
+            font_path = font
+            break
+    
+    if font_path:
+        font_prop = fm.FontProperties(fname=font_path)
+        plt.rcParams['font.family'] = font_name
+    else:
+        # 폰트가 없으면 기본 폰트 사용
+        plt.rcParams['font.family'] = 'sans-serif'
+        st.warning("NanumGothic 폰트를 찾을 수 없습니다. 기본 폰트를 사용합니다.")
+
+    plt.rcParams['axes.unicode_minus'] = False
+except Exception as e:
+    st.error(f"폰트 설정 중 오류 발생: {str(e)}")
+    plt.rcParams['font.family'] = 'sans-serif'
 
 # KRX 종목명-티커 매핑
 try:
@@ -132,7 +151,7 @@ def plot_stock_chart(stock_data, stock_name):
     ax.plot(ma_20.index, ma_20, label="20일", color="green")
     ax.plot(ma_60.index, ma_60, label="60일", color="orange")
     ax.plot(ma_120.index, ma_120, label="120일", color="purple")
-    ax.set_title(f"{stock_name} 주가 차트", fontproperties=font_prop)
+    ax.set_title(f"{stock_name} 주가 차트")
     ax.legend()
     plt.xticks(rotation=45)
     plt.tight_layout()
